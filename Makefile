@@ -1,8 +1,7 @@
 ##############################################################################
-# Makefile for bst application
+# Makefile for sort application
 # CMP_SC 3050
-# Spring 2024
-# A4
+# SP 2023
 # By Jim Ries (RiesJ@missouri.edu)
 ##############################################################################
 CC = gcc
@@ -13,12 +12,16 @@ LDFLAGS = -lm -lcs3050 -L.
 	@echo Compiling $^ ...
 	@$(CC) $(CFLAGS) $^
 
-mybst : main.o bst.o
+mysort : main.o sort.o
 	@echo Linking $@ ...
-	@$(CC) $^ -lm -o $@
+	@$(CC) $^ $(LDFLAGS) -o $@
 	@echo Done!
+
+libcs3050.a : cs3050.o
+	@echo Building library $@
+	@ar -crs libcs3050.a cs3050.o
 
 clean : 
 	@rm -rf *.o
-	@rm -rf mybst
+	@rm -rf mysort
 	@echo All Clean!
