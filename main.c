@@ -1,47 +1,126 @@
-// Do not change this file, except while you are debugging.
-// The TAs will use the original main for grading.  You might
-// want to pull down the original starter code and just copy in your
-// BFS.c, DFS.c, Queue.c and Queue.h files and build it.  This would
-// assure that you haven't broken anything by changing other files.
+// You should not need to change main.c.  However, while
+// developing your software, you may wish to uncomment various
+// things that print out information for debugging purposes.  You
+// can certainly add your own printing code as well to help you 
+// debug things.
+//
+// Note also that the TAs may print out information when checking
+// to see if your code actually works properly.
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include "MUCSGraph.h"
-#include "BFS.h"
-#include "DFS.h"
+#include "bst.h"
+
+// Symbolic Constants
+#define NAMELEN 256
+
+// Types
+typedef struct
+{
+	char szFirstName[NAMELEN];
+	char szLastName[NAMELEN];
+	int iAccountNumber;
+} Customer;
+
+// Local Functions
+void PrintCustomer(void * param)
+{
+	Customer * pCust = (Customer *)param;
+	printf("%s %s (%d)", pCust->szFirstName, pCust->szLastName, pCust->iAccountNumber);
+}
 
 int main(void)
 {
-    /******************************************************/
-    /* Set things up by loading the graph and printing it */
-    int countVertices, countEdges;
+	// Start with some customers
+	Customer customers[]=
+	{
+		{"Jim","Ries",123456},
+		{"Laura","Ries",789012},
+		{"Abbie","Ries",111111},
+		{"Charlotte","Ries",333333},
+		{"Cisco","Ries",555555},
+		{"Murphy","Ries",666666},
+		{"Larry","Ries",888888},
+		{"Allison","Ries",777777},
+		{"Marie","Ries",999999},
+		{"Maggie","Durant",121212},
+		{"Paul","Durant",212121},
+		{"Alex","Durant",444444},
+		{"Katherine","Durant",222222},
+	};
 
-	int isDirected = GetDirected();
-    int startNode = GetStartNode();
-    GetCounts(&countVertices,&countEdges);
+	int countCustomers = sizeof(customers)/sizeof(Customer);
 
-    Vertex vertices[countVertices];
-    Edge edges[countEdges];
-    memset(vertices,0,sizeof(vertices));
-    memset(edges,0,sizeof(edges));
+	// Create an empty BST that we can add customers to	
+	printf("Creating an empty BST...\n");
+	BST * pBST = NewBST();
 
-    GetEdges(edges,countEdges);
-    BuildAdjacency(vertices,edges,countVertices,countEdges);
-    printf("\n\n****Graph:\n");
-    if (isDirected)
-    {
-        printf("DIRECTED\n");
-    }
-    else
-    {
-        printf("UNDIRECTED\n");
-    }
-    printf("Start node: %d\n",startNode);
-    PrintVertices(vertices,countVertices);
-    printf("\n");
-    /******************************************************/
+	for (int i=0;i<countCustomers;i++)
+	{
+		TreeInsert(pBST,&customers[i],customers[i].iAccountNumber);
+	}
 
-    PrintBFS(vertices,countVertices,edges,countEdges,startNode);
-    PrintDFS(vertices,countVertices,edges,countEdges);
+	// Print the Inorder Traversal
+	printf("\n***In order:\n");
+	InOrder(pBST,PrintCustomer);
+	printf("\n");
+
+	// Print the Preorder Traversal
+	printf("\n***Preorder:\n");
+	PreOrder(pBST,PrintCustomer);
+	printf("\n");
+
+	// Print the Postorder Traversal
+	printf("\n***Postorder:\n");
+	PostOrder(pBST,PrintCustomer);
+	printf("\n");
+
+	// Search the tree for particular customers and print those customers
+	Customer * pCustomer;
+	printf("\n\nLooking for 111111\n");
+	pCustomer=(Customer *)Search(pBST,111111);
+	if (NULL==pCustomer)
+	{
+		printf("Customer 111111 not found!\n");
+	}
+	else
+	{
+		printf("Found: ");
+		PrintCustomer(pCustomer);
+		printf("\n");
+	}
+	printf("\n\nLooking for 222222\n");
+	pCustomer=(Customer *)Search(pBST,222222);
+	if (NULL==pCustomer)
+	{
+		printf("Customer 222222 not found!\n");
+	}
+	else
+	{
+		printf("Found: ");
+		PrintCustomer(pCustomer);
+		printf("\n");
+	}
+
+
+	// Delete some customers from the tree and then print the InOrder
+	printf("\nDeleting 111111 ...\n");
+	TreeDelete(pBST,111111);
+	InOrder(pBST,PrintCustomer);
+	printf("\n");
+	printf("\nDeleting 222222 ...\n");
+	TreeDelete(pBST,222222);
+	InOrder(pBST,PrintCustomer);
+	printf("\n");
+
+
+	// Insert a couple of customers to the tree and then print the InOrder
+	Customer c = {"Ned","Needleman",000000};
+	Customer d = {"Lou","Reed",654321};
+	printf("\nAdding 000000 ...\n");
+	TreeInsert(pBST,&c,c.iAccountNumber);
+	printf("\nAdding 654321 ...\n");
+	TreeInsert(pBST,&d,d.iAccountNumber);
+	InOrder(pBST,PrintCustomer);
+	printf("\n");
 }

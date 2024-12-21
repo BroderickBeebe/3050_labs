@@ -1,164 +1,103 @@
 # CMP_SC 3050 FP2024
 
-# Assignment 5: Implement BFS and DFS: Submit to canvas
+# Assignment 4: Implement Binary Search Tree: Submit to canvas
 
 ## Description
 
-You are to implement both a Breadth First Search and a Depth First
-Search for a graph using the provided library to represent the graph.
-The program will accept input via stdin. Note that you can redirect
-stdin to come from a file via the command-line and the starter project
-includes an example file that can be used as input for testing. The
-input format should be as follows:
+You are to implement the functions that have been "stubbed out" in
+bst.c. You will also need to define data types in bst.h. Basically, you
+are to implement a all of the needed Binary search Tree (BST) functions
+such that main.c will work properly when linked to your bst.o.
 
-> \<1 or 0 to indicate directed or not\>
->
-> \<start node\>
->
-> \<# of nodes\>
->
-> \<# of edges\>
->
-> \<node 1 of edge1\>\<node 2 of edge 1\>\<weight of edge 1\>
->
-> \<node 1 of edge1\>\<node 2 of edge 2\>\<weight of edge 2\>
->
-> \...\...
->
-> \<node 1 of edge n\>\<node 2 of edge n\>\<weight of edge n\>
-
-For example, the following input describes an undirected graph with 3
-nodes (indexed 1, 2 and 3) and 2 edges ({1,2} with weight 0.5 and {2,3}
-with weight 2.2), and a staring node of 1:
-
-> 0
->
-> 1
->
-> 3
->
-> 2
->
-> 1 2 0.5
->
-> 2 3 2.2
-
-For the output, your program should print out each node as it becomes
-"black". For BFS, a start node is given. For DFS, just start at the
-first node (node #1). For BFS, put the distance to the start node in
-parenthesis. For DFS, put the "finish time" in parenthesis.
-
-You are given a main() program, a Makefile, a library, and some starter
-code. All you need to do is complete the actual code for the functions
-in BFS.c and DFS.c. If you need a Queue data structure, you can easily
-implement this in C (I made a separate Queue.h and Queue.c for my
-implementation and so I added blanks to the Makefile for you).
+You are given a main() program, a Makefile, and some starter code. All
+you need to do is complete the actual code for the functions in bst.c
+and make any changes needed to bst.h.
 
 ## How to Get Started
 
-Clone this repository: https://github.com/angrynarwhal/cs3050fs2024a5 
+The starter code is publicly available on GitHub. You can clone it using
+git via the following command:
 
-You are welcome to work on your code on any platform you like. However,
-you should be aware that submissions will
-**[[only]{.underline}]{.mark}** be evaluated by the TAs on
-tc.rnet.missouri.edu. If, for example, something works on your machine
-but doesn't compile on tc.rnet.missouri.edu, you will get a zero.
+> git clone https://github.com/angrynarwhal/cs3050fs2024a4
 
-Once you have the starter code in a directory, just type "make". This
-will build the code and leave you with an executable file called "test".
-You can run this file with the included sample input file
-(CLRS.4E.p557.G) this way:
+I recommend you clone this code somewhere under your home directory on
+tc.rnet.missouri.edu. You are welcome to clone this and work on your
+code on any platform you like. However, you should be aware that
+submissions will **[[only]{.underline}]{.mark}** be evaluated by the TAs
+on tc.rnet.missouri.edu. If, for example, something works on your
+machine but doesn't compile on tc.rnet.missouri.edu, you will get a
+zero.
 
-> ./test \<CLRS.4E.p557.G
+Once you have cloned things down, you should cd to the newly cloned
+directory and type "make". This will build the code and leave you with
+an executable file called "mybst".
+
+## Notes
+
+-   You should not need to change any of the files except bst.c and
+    bst.h. When you have completed the assignment, submit both bst.c and
+    bst.h on Canvas. The TAs will clone fresh starter code down and copy
+    in your bst.c and bst.h in order to evaluate it.
+
+-   You will probably want to uncomment and possibly add code to print
+    things out in main() while you are working on the assignment, but
+    you should make sure your code works with the original main.c before
+    you submit it.
 
 ## Sample Output
 
-jimr@jimrsurfacepro9:\~/CS3050/SP2024/assignments/A5/solution\$ ./test
-\<CLRS.4E.p557.G
+jimr@jimrsurfacepro9:\~/CS3050/FP2024/assignments/A4\$ ./mybst
 
-Enter 1 for directed or 0 for undirected: Enter the node to start
-algorithm: Enter the number of vertices: Enter the number of edges:
+Creating an empty BST\...
 
-\*\*\*\*Graph:
+\*\*\*In order:
 
-UNDIRECTED
+Abbie Ries (111111)Maggie Durant (121212)Jim Ries (123456)Paul Durant
+(212121)Katherine Durant (222222)Charlotte Ries (333333)Alex Durant
+(444444)Cisco Ries (555555)Murphy Ries (666666)Allison Ries
+(777777)Laura Ries (789012)Larry Ries (888888)Marie Ries (999999)
 
-Start node: 6
+\*\*\*Preorder:
 
-Vertex 1:
+Jim Ries (123456)Abbie Ries (111111)Maggie Durant (121212)Laura Ries
+(789012)Charlotte Ries (333333)Paul Durant (212121)Katherine Durant
+(222222)Cisco Ries (555555)Alex Durant (444444)Murphy Ries
+(666666)Allison Ries (777777)Larry Ries (888888)Marie Ries (999999)
 
-1-\>2 (1.00)
+\*\*\*Postorder:
 
-1-\>3 (1.00)
+Maggie Durant (121212)Abbie Ries (111111)Katherine Durant (222222)Paul
+Durant (212121)Alex Durant (444444)Allison Ries (777777)Murphy Ries
+(666666)Cisco Ries (555555)Charlotte Ries (333333)Marie Ries
+(999999)Larry Ries (888888)Laura Ries (789012)Jim Ries (123456)
 
-1-\>4 (1.00)
+Looking for 111111
 
-1-\>5 (1.00)
+Found: Abbie Ries (111111)
 
-Vertex 2:
+Looking for 222222
 
-2-\>1 (1.00)
+Found: Katherine Durant (222222)
 
-2-\>5 (1.00)
+Deleting 111111 \...
 
-2-\>9 (1.00)
+Maggie Durant (121212)Jim Ries (123456)Paul Durant (212121)Katherine
+Durant (222222)Charlotte Ries (333333)Alex Durant (444444)Cisco Ries
+(555555)Murphy Ries (666666)Allison Ries (777777)Laura Ries
+(789012)Larry Ries (888888)Marie Ries (999999)
 
-Vertex 3:
+Deleting 222222 \...
 
-3-\>1 (1.00)
+Maggie Durant (121212)Jim Ries (123456)Paul Durant (212121)Charlotte
+Ries (333333)Alex Durant (444444)Cisco Ries (555555)Murphy Ries
+(666666)Allison Ries (777777)Laura Ries (789012)Larry Ries (888888)Marie
+Ries (999999)
 
-3-\>6 (1.00)
+Adding 000000 \...
 
-3-\>7 (1.00)
+Adding 654321 \...
 
-Vertex 4:
-
-4-\>1 (1.00)
-
-4-\>6 (1.00)
-
-4-\>9 (1.00)
-
-Vertex 5:
-
-5-\>1 (1.00)
-
-5-\>2 (1.00)
-
-Vertex 6:
-
-6-\>3 (1.00)
-
-6-\>4 (1.00)
-
-6-\>8 (1.00)
-
-Vertex 7:
-
-7-\>3 (1.00)
-
-7-\>8 (1.00)
-
-Vertex 8:
-
-8-\>6 (1.00)
-
-8-\>7 (1.00)
-
-8-\>9 (1.00)
-
-Vertex 9:
-
-9-\>2 (1.00)
-
-9-\>4 (1.00)
-
-9-\>8 (1.00)
-
-BFS:
-
-6(0) 3(1) 4(1) 8(1) 1(2) 7(2) 9(2) 2(3) 5(3)
-
-DFS:
-
-5(4) 8(11) 7(12) 3(13) 6(14) 4(15) 9(16) 2(17) 1(18)
+Ned Needleman (0)Maggie Durant (121212)Jim Ries (123456)Paul Durant
+(212121)Charlotte Ries (333333)Alex Durant (444444)Cisco Ries
+(555555)Lou Reed (654321)Murphy Ries (666666)Allison Ries (777777)Laura
+Ries (789012)Larry Ries (888888)Marie Ries (999999)

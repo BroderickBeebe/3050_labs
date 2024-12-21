@@ -1,30 +1,24 @@
 ##############################################################################
-# Makefile for BFS/DFS assignment
+# Makefile for bst application
 # CMP_SC 3050
 # Spring 2024
+# A4
 # By Jim Ries (RiesJ@missouri.edu)
 ##############################################################################
 CC = gcc
-CPP = g++
 CFLAGS = -Wall -Werror -c -g -std=c11 -I.
-CPPFLAGS = -Wall -Werror -c -g -I.
-LDFLAGS = -lm -lMUCSGraph -L.
-
-default: test
+LDFLAGS = -lm -lcs3050 -L.
 
 %.o : %.c 
-	@echo Compiling $^ 
+	@echo Compiling $^ ...
 	@$(CC) $(CFLAGS) $^
 
-%.o : %.cc
-	@echo Compiling $^ 
-	@$(CPP) $(CPPFLAGS) $^
-
-test : main.o BFS.o DFS.o Queue.o
-	@echo Linking $@ 
-	@$(CC) $^ $(LDFLAGS) -o $@
+mybst : main.o bst.o
+	@echo Linking $@ ...
+	@$(CC) $^ -lm -o $@
+	@echo Done!
 
 clean : 
 	@rm -rf *.o
-	@rm -rf test
+	@rm -rf mybst
 	@echo All Clean!
